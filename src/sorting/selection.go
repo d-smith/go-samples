@@ -1,15 +1,7 @@
 package main
 
 import "fmt"
-
-func isSorted(nums[] int) bool {
-	for i := 1; i < len(nums); i++ {
-		if(nums[i] < nums[i - 1]) {
-			return false
-		}
-	}
-	return true
-}
+import su "sorting/sortutil"
 
 func swap(a[] int, i int, j int) {
 	tmp := a[j]
@@ -36,7 +28,7 @@ func sort(a[] int)  {
 func main() {
 
 	nums := [] int {5,4,1,8,7,2,6,3}
-	fmt.Println(isSorted(nums))
+	fmt.Println(su.IsSorted(nums))
 	sort(nums)
-	fmt.Println(isSorted(nums))
+	fmt.Println(su.IsSorted(nums))
 }
