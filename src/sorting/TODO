@@ -1,2 +1,2 @@
-1) Create a util module to export isSorted
-2) Try the one line swap e.g. a[i], a[i+1] = a[i+1], a[i]
+Modify tests to generate the array under test, instead of having to have
+predefined test data.

@@ -1,4 +1,4 @@
-package main
+package sorting
 
 import "fmt"
 import su "sorting/sortutil"
@@ -9,7 +9,7 @@ func swap(a[] int, i int, j int) {
 	a[i] = tmp
 }
 
-func sort(a[] int)  {
+func SelectionSort(a[] int)  {
 	n := len(a)
 	for i := 0; i < n - 1; i++ {
 		minIndex := i;
@@ -29,6 +29,6 @@ func main() {
 
 	nums := [] int {5,4,1,8,7,2,6,3}
 	fmt.Println(su.IsSorted(nums))
-	sort(nums)
+	SelectionSort(nums)
 	fmt.Println(su.IsSorted(nums))
 }
