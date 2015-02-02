@@ -120,3 +120,161 @@ Range
       for _, value := range pow {
       	fmt.Printf("%d\n", value)
       }
+
+Slices Exercise
+
+    package main
+
+    import "code.google.com/p/go-tour/pic"
+
+    func Pic(dx, dy int) [][]uint8 {
+    	picdata := make([][]uint8, dy)
+    	for i := range picdata {
+    		picdata[i] = make([]uint8,dx)
+    	}
+
+    	for y := range picdata {
+    		for x := range picdata[y] {
+    			picdata[y][x] = uint8 (x*y)
+    		}
+    	}
+
+    	return picdata
+    }
+
+    func main() {
+    	pic.Show(Pic)
+    }
+
+## Maps
+
+* A map maps keys to values
+* Maps must be created with make before use, the nil map is empty and cannot
+be assigned to
+
+      type Vertex struct {
+      	Lat, Long float64
+      }
+
+      var m map[string]Vertex
+
+      func main() {
+      	m = make(map[string]Vertex)
+      	m["Bell Labs"] = Vertex{
+      		40.68433, -74.39967,
+      	}
+      	fmt.Println(m["Bell Labs"])
+      }
+
+* Map literals are like struct literals, but the keys are required.
+
+      var m = map[string]Vertex{
+      	"Bell Labs": Vertex{
+      		40.68433, -74.39967,
+      	},
+      	"Google": Vertex{
+      		37.42202, -122.08408,
+      	},
+      }
+
+* If the top-level type is just a type name, you can omit it from the elements of the literal.
+
+      var m = map[string]Vertex{
+      	"Bell Labs": {40.68433, -74.39967},
+      	"Google":    {37.42202, -122.08408},
+      }
+
+Working with maps
+* m[key] = elem
+* elem = m[key]
+* delete(m, key)
+* elem, ok = m[key] - If key is in m, ok is true. If not, ok is false and elem is the zero value for the map's element type.
+Similarly, when reading from a map if the key is not present the result is the zero value for the map's element type.
+
+
+Map Exercise
+
+      package main
+
+      import (
+      	"code.google.com/p/go-tour/wc"
+      	"strings"
+      )
+
+      func WordCount(s string) map[string]int {
+
+      	wcmap := make(map[string]int)
+
+      	words := strings.Fields(s)
+      	for i:= range words {
+      		word := words[i]
+      		count := wcmap[word]
+      		wcmap[word] = count + 1
+      	}
+      	return wcmap
+      }
+
+      func main() {
+      	wc.Test(WordCount)
+      }
+
+Function Values
+* Functions are values too
+
+      func main() {
+      	hypot := func(x, y float64) float64 {
+      		return math.Sqrt(x*x + y*y)
+      	}
+
+      	fmt.Println(hypot(3, 4))
+      }
+
+
+Closures
+* Go functions may be closures. A closure is a function value that references
+variables from outside its body. The function may access and assign to the
+referenced variables; in this sense the function is "bound" to the variables.
+
+      func adder() func(int) int {
+      	sum := 0
+      	return func(x int) int {
+      		sum += x
+      		return sum
+      	}
+      }
+
+      func main() {
+      	pos, neg := adder(), adder()
+      	for i := 0; i < 10; i++ {
+      		fmt.Println(
+      			pos(i),
+      			neg(-2*i),
+      		)
+      	}
+      }
+
+
+Exercise - Function returning a function that returns successive
+Fibonacci numbers
+
+      package main
+
+      import "fmt"
+
+      // fibonacci is a function that returns
+      // a function that returns an int.
+      func fibonacci() func() int {
+      	a, b := 0, 1
+
+      	return func() int {
+      		a, b = b, a+b
+      		return a
+      	}
+      }
+
+      func main() {
+      	f := fibonacci()
+      	for i := 0; i < 10; i++ {
+      		fmt.Println(f())
+      	}
+      }
